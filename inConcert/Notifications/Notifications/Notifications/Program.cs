@@ -21,7 +21,7 @@ namespace Notifications
             {
                 myConnection.Open();
                 Console.WriteLine("--Connected to DB--");
-                Thread.Sleep(1000);
+                Thread.Sleep(500);
             }
             catch (Exception e)
             {
@@ -41,8 +41,8 @@ namespace Notifications
                 while (myReader.Read())
                 {
 
-                    Int64 timestamp = Convert.ToInt64(myReader["timestamp"].ToString());
-                    string content = myReader["content"].ToString();
+                    Int64 timestamp = Convert.ToInt64(myReader["CreatedDate"].ToString());
+                    string content = myReader["Text"].ToString();
                     if (timestamp >= lastLogIn)
                     {
                         changes.Add(content);
