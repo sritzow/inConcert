@@ -29,10 +29,10 @@ Current Hi Scores
 Player|Rank|Level
 -------|------|---------------------
 Spencer|☆☆☆|Set Up Git Repository
-Spencer|• • •|LogIn System
-Erik|☆ • •|Notifications
+Spencer|☆☆☆|LogIn System
+Erik|☆☆☆|Notifications
 Charlie|• • •|Calendar
 Erbody|☆ • •|Set Up Database
 Brandon|• • •|Chat
 Marc|• • •|Search
-Spencer|• • •|E-mail
+Spencer|level deleted|E-mail
