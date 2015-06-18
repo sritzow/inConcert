@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using inConcert.Models;
+using System.Collections.Generic;
 
 namespace inConcert.Controllers
 {
@@ -48,9 +49,27 @@ namespace inConcert.Controllers
                 _userManager = value;
             }
         }
-        public ActionResult Index()
+        public string Index()
         {
-            return View();
+            List<string[]> values = new List<string[]>();
+            values.Add(new string[] {"A new project", "Some description"});
+            values.Add(new string[] {"Another new project", "Some other description"});
+            //DataAccess.DataAccess.Create("projects", new string[] { "name", "description" }, values);        
+
+            DataAccess.DataAccess.Update("projects", new string[] { "name" }, new string[] { "UPDATED LOL" }, new string[] { "id = 4" });
+            List<List<object>> result = DataAccess.DataAccess.Read(new string [] {"projects"});
+            string rString = "";
+            rString += result.Count + "<br />";
+            foreach (List<object> row in result)
+            {
+                rString += row.Count + "<br />";
+                foreach (object col in row)
+                {
+                    rString += col.ToString() + "<br />";
+                }
+            }
+            return rString;
+            
         }
 
         public string Test()
