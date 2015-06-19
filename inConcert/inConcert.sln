@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "inConcert", "inConcert\inCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{C794BB75-395A-440C-AB7C-72315D41F699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDbUpdates", "..\..\..\..\Desktop\signalrdatabasenotifications-master\SignalRDbUpdates\SignalRDbUpdates.csproj", "{9051592F-607A-4EA1-AD38-0BD3E1D81B31}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDbUpdates", "Updates\SignalRDbUpdates\SignalRDbUpdates.csproj", "{9051592F-607A-4EA1-AD38-0BD3E1D81B31}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

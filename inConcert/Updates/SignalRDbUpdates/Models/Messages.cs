@@ -11,7 +11,6 @@ namespace SignalRDbUpdates.Models
 
         public string Update { get; set; }
 
-
         public DateTime TimeStamp { get; set; }
     }
 }
