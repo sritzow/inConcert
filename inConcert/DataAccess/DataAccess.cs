@@ -9,8 +9,8 @@ namespace DataAccess
 {
     public class DataAccess
     {
-        static string strConn = "Server=SQL;Database=Hydro_practice;User Id=Hydrogen;Password=Codeflange4life1;";
-        public static SqlConnection Connect()
+        static string strConn = "Server=SQL;Database=Hydro_final;User Id=Hydrogen;Password=Codeflange4life1;";
+        private static SqlConnection Connect()
         {
             try
             {
@@ -23,7 +23,7 @@ namespace DataAccess
             }
         }
 
-        public static List<List<object>> Query(string query)
+        private static List<List<object>> Query(string query)
         {
             SqlConnection conn = null;
             try
@@ -104,7 +104,10 @@ namespace DataAccess
 
             if (where != null && where.Length > 0)
             {
-                queryString += " WHERE ";
+                if (tables.Length > 1)
+                    queryString += " ON ";
+                else
+                    queryString += " WHERE ";
                 queryString += String.Join(" AND ", where);
             }
 
@@ -159,53 +162,6 @@ namespace DataAccess
         public static object Delete()
         {
             return null;
-        }
-
-        /*public static List<List<object>> Query(int projectId)
-        {
-            /*
-            SqlCommand sqlCmd = new SqlCommand();
-
-            sqlCmd.CommandText = "SELECT * FROM projects WHERE id = " + projectId;
-            sqlCmd.Connection = sqlConn;
-            sqlConn.Open();
-            //here execute scalar will get firsr row first column value
-
-            SqlDataReader reader = sqlCmd.ExecuteReader();
-            List<List<object>> retval = new List<List<object>>();
-
-            try
-            {
-
-                while (reader.Read())
-                {
-                    List<object> row = new List<object>();
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        row.Add(reader[i]);
-                    }
-
-                    retval.Add(row);
-                }
-            }
-            finally
-            {
-                // Always call Close when done reading.
-                reader.Close();
-            }
-
-            string result = Convert.ToString(retval);
-            if (string.IsNullOrEmpty(result))
-            {
-                Console.WriteLine("No record found!");
-            }
-            else
-            {
-                Console.WriteLine(result);
-            }
-            sqlConn.Close();
-            return retval;
-        }*/
+        }     
     }
 }
