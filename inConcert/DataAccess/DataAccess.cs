@@ -9,7 +9,7 @@ namespace DataAccess
 {
     public class DataAccess
     {
-        static string strConn = "Server=SQL;Database=Hydro_practice;User Id=Hydrogen;Password=Codeflange4life1;";
+        static string strConn = "Server=SQL;Database=Hydro_final;User Id=Hydrogen;Password=Codeflange4life1;";
         public static SqlConnection Connect()
         {
             try
@@ -104,7 +104,10 @@ namespace DataAccess
 
             if (where != null && where.Length > 0)
             {
-                queryString += " WHERE ";
+                if (tables.Length > 1)
+                    queryString += " ON ";
+                else
+                    queryString += " WHERE ";
                 queryString += String.Join(" AND ", where);
             }
 
