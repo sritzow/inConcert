@@ -73,6 +73,22 @@ namespace inConcert.Controllers
             
         }
 
+        public string CalendarTest()
+        {
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Calendars", "Events"), Build.StringArray("Events.title", "Events.description", "Events.time"), Build.StringArray("Calendars.project_id = 1", "Events.calendar_id = Calendars.id"));
+            string rString = "";
+            rString += result.Count + "<br />";
+            foreach (List<object> row in result)
+            {
+                rString += row.Count + "<br />";
+                foreach (object col in row)
+                {
+                    rString += col.ToString() + "<br />";
+                }
+            }
+            return rString;
+        }
+
         public string Test()
         {
 
