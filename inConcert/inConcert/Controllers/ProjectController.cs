@@ -73,6 +73,20 @@ namespace inConcert.Controllers
             
         }
 
+        public string Project(int id)
+        {
+            Session["ProjectViewed"] = id;
+            if (Authorized(id))
+                return "Authorized";
+            return "Not Authorized";
+        }
+
+        private bool Authorized(int projectId)
+        {
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("project_users"), Build.StringArray("*"), Build.StringArray("project_id = " + projectId, "user_id = '" + User.Identity.GetUserId() + "'"));
+            return result.Count > 0;  
+        }
+
         public string CalendarTest()
         {
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Calendars", "Events"), Build.StringArray("Events.title", "Events.description", "Events.time"), Build.StringArray("Calendars.project_id = 1", "Events.calendar_id = Calendars.id"));
