@@ -71,4 +71,14 @@ namespace inConcert.Models
         public string description { get; set; }
         public long time { get; set; }
     }
+
+    public class Message
+    {
+        public int id { get; set; }
+        public string from { get; set; }
+        public string to { get; set; }
+        public string body { get; set; }
+        public string project { get; set; }
+        public DateTime time { get; set; }
+    }
 }
