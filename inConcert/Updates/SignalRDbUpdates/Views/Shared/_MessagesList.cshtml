@@ -1,31 +1,32 @@
 ﻿@model IEnumerable<SignalRDbUpdates.Models.Messages>
 
 <br />
-@Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create")
 <br />
 <br />
-    <table class="table">
-        <tr>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Update)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeStamp)
+        </th>
+        
+    </tr>
 
-            <th>
-                @Html.DisplayNameFor(model => model.Update)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Update)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TimeStamp)
+        </td>
+        
+    </tr>
+}
 
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Update)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TimeStamp)
-                </td>
-
-            </tr>
-        }
-    </table>
+</table>

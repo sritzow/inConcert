@@ -12,21 +12,22 @@
 
 @section Scripts{
 <script src="/Scripts/jquery.signalR-2.1.1.js"></script>
- 
     <script src="/signalr/hubs"></script>
 
 <script type="text/javascript">
     $(function () {
-        
+        // Declare a proxy to reference the hub.
         var notifications = $.connection.messagesHub;
        
-       
+        //debugger;
+        // Create a function that the hub can call to broadcast messages.
         notifications.client.updateMessages = function () {
             getAllMessages()
            
         };
         // Start the connection.
         $.connection.hub.start().done(function () {
+            //alert("connection started")
             getAllMessages();
         }).fail(function (e) {
             alert(e);
@@ -49,6 +50,5 @@
         });
     }
 </script>
-
 
 }

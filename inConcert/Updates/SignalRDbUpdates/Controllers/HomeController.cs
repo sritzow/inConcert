@@ -33,7 +33,5 @@ namespace SignalRDbUpdates.Controllers
             MessagesRepository _messageRepository = new MessagesRepository();
             return PartialView("_MessagesList", _messageRepository.GetAllMessages());
         }
-
-
     }
 }

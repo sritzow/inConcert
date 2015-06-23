@@ -19,7 +19,7 @@ namespace SignalRDbUpdates.Models
             using (var connection = new SqlConnection(_connString))
             {
                 connection.Open();
-                using (var command = new SqlCommand(@"SELECT [MessageID], [Message], [Date] FROM [dbo].[Messages]", connection))
+                using (var command = new SqlCommand(@"SELECT [MessageID], [Message], [EmptyMessage], [Date] FROM [dbo].[Messages]", connection))
                 {
                     command.Notification = null;
 
