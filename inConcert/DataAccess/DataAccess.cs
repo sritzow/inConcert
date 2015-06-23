@@ -17,7 +17,7 @@ namespace DataAccess
                 SqlConnection sqlConn = new SqlConnection(strConn);
                 return sqlConn;
             }
-            catch(SqlException e) 
+            catch (SqlException e)
             {
                 throw e;
             }
@@ -85,7 +85,7 @@ namespace DataAccess
             if (columns == null)
             {
                 queryString += "* ";
-            } 
+            }
             else
             {
                 queryString += String.Join(", ", columns);
@@ -159,9 +159,13 @@ namespace DataAccess
             return Query(queryString);
         }
 
-        public static object Delete()
+        public static object Delete(string table, string[] where)
         {
-            return null;
-        }     
+            string queryString = "DELETE FROM " + table;
+            queryString += " WHERE "+String.Join(" AND ", where);
+
+
+            return Query(queryString);
+        }
     }
 }

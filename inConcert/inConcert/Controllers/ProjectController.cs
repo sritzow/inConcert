@@ -102,6 +102,11 @@ namespace inConcert.Controllers
             }
             return rString;
         }
+        public void DeleteTest()
+        {
+            object result = DataAccess.DataAccess.Delete("Events", Build.StringArray("calendar_id=1"));
+            
+        }
 
         public string Test()
         {
