@@ -81,8 +81,4 @@ namespace inConcert.Models
         public string project { get; set; }
         public DateTime time { get; set; }
     }
-    public class Chat
-    {
-        public IEnumerable<Message> messages;
-    }
 }
