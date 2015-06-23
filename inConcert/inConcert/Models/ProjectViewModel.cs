@@ -71,4 +71,11 @@ namespace ProjectManager.Models
         public string description { get; set; }
         public long time { get; set; }
     }
+
+    public class Messages
+    {
+        public string message { get; set; }
+        public string date { get; set; }
+       
+    }
 }
