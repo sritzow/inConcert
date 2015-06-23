@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjectManager.Models
+namespace inConcert.Models
 {
     public class ProjectViewModel
     {
@@ -72,10 +72,13 @@ namespace ProjectManager.Models
         public long time { get; set; }
     }
 
-    public class Messages
+    public class Message
     {
-        public string message { get; set; }
-        public string date { get; set; }
-       
+        public int id { get; set; }
+        public string from { get; set; }
+        public string to { get; set; }
+        public string body { get; set; }
+        public string project { get; set; }
+        public DateTime time { get; set; }
     }
 }

@@ -259,6 +259,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
+    <Content Include="Views\Project\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
