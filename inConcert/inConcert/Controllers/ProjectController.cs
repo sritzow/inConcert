@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using inConcert.Models;
 using System.Collections.Generic;
 using inConcert.Helper;
+using inConcert.Models;
 
 namespace inConcert.Controllers
 {
@@ -87,20 +88,28 @@ namespace inConcert.Controllers
             return result.Count > 0;  
         }
 
-        public string CalendarTest()
+        public ActionResult CalendarTest()
         {
-            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Calendars", "Events"), Build.StringArray("Events.title", "Events.description", "Events.time"), Build.StringArray("Calendars.project_id = 1", "Events.calendar_id = Calendars.id"));
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Calendars", "Events"), Build.StringArray("Events.title", "Events.description", "Events.time"), Build.StringArray("Calendars.project_id = 2", "Events.calendar_id = Calendars.id"));
             string rString = "";
             rString += result.Count + "<br />";
+            Calendar calendar = new Calendar();
+            calendar.events = new List<Event>();
             foreach (List<object> row in result)
             {
-                rString += row.Count + "<br />";
+                Event e = new Event();
+                e.title = (string) row[0];
+                e.description = (string) row[1];
+                e.time = (long) row[2];
+                calendar.events.Add(e);
+                rString += row.ToString() + "<br />";
+                
                 foreach (object col in row)
                 {
                     rString += col.ToString() + "<br />";
                 }
             }
-            return rString;
+            return View("Calendar", calendar);
         }
         public void DeleteTest()
         {

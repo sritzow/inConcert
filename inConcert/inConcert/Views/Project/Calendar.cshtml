@@ -1,0 +1,10 @@
+﻿@model inConcert.Models.Calendar
+@using inConcert.Models;
+
+<span>Model Display</span>
+@foreach (Event evt in Model.events) {
+    <br /><br />
+    <span>Title: @evt.title</span><br />
+    <span>Description: @evt.description</span><br />
+    <span>Time: @evt.time</span><br />
+}

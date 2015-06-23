@@ -14,8 +14,6 @@ using SignalRDbUpdates.Models;
 
 namespace SignalRDbUpdates.Controllers
 {
-    
-    
     [Authorize]
     public class AccountController : Controller
     {
