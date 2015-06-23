@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ProjectManager.Models
+namespace inConcert.Models
 {
     public class ProjectViewModel
     {
