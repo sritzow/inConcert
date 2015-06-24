@@ -164,7 +164,7 @@ namespace inConcert.Controllers
             return User.Identity.GetUserId();
         }
 
-        public ActionResult Chat()
+        public Chat Chat()
         {
             Chat chat = new Chat();
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"));
@@ -180,17 +180,57 @@ namespace inConcert.Controllers
                 chat.messages.Add(msg);
             }
 
-            return View("chat", chat);
+            return chat;
 
         }
+
+        public ActionResult ChatRoom()
+        {
+            return View("ChatRoom", Chat());
+        }
+
         public ActionResult CreateMessage()
         {
             return View("CreateMessage");
         }
 
-        public ActionResult GenerateMessage()
+        public ActionResult GenerateMessage(Message msg)
         {
-            throw new NotImplementedException();
+            if (msg.to == null) {
+
+                msg.to = "failed to send";
+
+            } if (msg.from == null) {
+
+                msg.from = "failed to send";
+
+            } if (msg.body == null) {
+
+                msg.body = "Error";
+
+            } if (msg.project == null) {
+
+                msg.project = "inConcert"; 
+
+            }
+
+            msg.time = DateTime.Now;
+            List<string[]> values = new List<string[]>();
+            string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
+            string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
+
+            values.Add(message_values);
+
+            DataAccess.DataAccess.Create(
+
+                "messages",
+                column_names,
+                values
+
+            );
+
+            return View("ChatRoom", Chat());
+
         }
     }
 }
