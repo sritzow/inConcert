@@ -81,4 +81,14 @@ namespace inConcert.Models
         public string project { get; set; }
         public DateTime time { get; set; }
     }
+
+    public class Notification
+    {
+        public int ID { get; set; }
+
+        public string Update { get; set; }
+
+        public DateTime TimeStamp { get; set; }
+    }
+   
 }

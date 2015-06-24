@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using inConcert.Models;
 using System.Collections.Generic;
 using inConcert.Helper;
-using inConcert.Models;
+
 
 namespace inConcert.Controllers
 {

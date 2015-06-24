@@ -1,5 +1,52 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@*@model System.Collections.Generic.List<inConcert.Controllers.NotificationController>*@
+@*@model IEnumerable<inConcert.Controllers.NotificationController>*@
+@*@model inConcert.Controllers.NotificationController*@
+@model string
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-
+    
 }
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="notificationsTable"></div>
+    </div>
+</div>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            <h3>Update</h3>
+        </th>
+        <th>
+            <h3>TimeStamp</h3>
+        </th>
+
+    </tr>
+    @int i = 0;
+    @foreach (var item in Model.Split('~'))
+    {
+       
+        <tr>
+            @int i = i + 1;
+            <td>
+            @if(i % 2==0)
+            {
+                @item
+            }
+            </td>
+            
+            <td>
+                @item
+            </td>
+
+        </tr>
+    }
+</table>
+
