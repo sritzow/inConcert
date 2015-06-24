@@ -1,7 +1,15 @@
 ﻿@model inConcert.Models.Calendar
 @using inConcert.Models;
 
-<span>Model Display</span>
+<span>@Model.name</span>
+@using (Html.BeginForm("CreateEvent", "Project", FormMethod.Post))
+{
+    @Html.TextBox("Title");
+    @Html.TextBox("Description");
+    @Html.TextBox("Time");
+    <input type="submit" value="Create Event">
+}
+
 @foreach (Event evt in Model.events) {
     <br /><br />
     <span>Title: @evt.title</span><br />
