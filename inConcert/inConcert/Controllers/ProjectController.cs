@@ -100,14 +100,14 @@ namespace inConcert.Controllers
             foreach (List<object> calendar in calendarResult)
             {
                 Calendar cal = new Calendar();
-                cal.id = (int) calendar[0];
+                cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
                 List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
-                    e.id = (int) evt[0];
-                    e.calendarId = (int) evt[1];
+                    e.id = (int)evt[0];
+                    e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
                     e.time = (long)evt[4];
@@ -115,7 +115,7 @@ namespace inConcert.Controllers
                 }
                 project.calendars.Add(cal);
             }
-            
+
 
             return View("Mock", project);
         }
@@ -190,7 +190,8 @@ namespace inConcert.Controllers
         }
         public string Search(string keyword)
         {
-            List<List<object>> results = new List<List<object>>{};
+             
+            List<List<object>> results = new List<List<object>> { };
             List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
             foreach (List<object> tables in tableslist)
             {
@@ -202,22 +203,21 @@ namespace inConcert.Controllers
                         foreach (List<object> columns in columnslist)
                         {
                             foreach (object column in columns)
-                            {List<List<object>> queryresults =DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), new string[] { }, Build.StringArray(column.ToString() + "=" + keyword));
-                                List<List<object>> concatresults = results.Concat(queryresults).ToList();
-                                results = concatresults;
+                            {
+                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword+"%'"));
+                                List<List<object>> concatResults = results.Concat(queryResults).ToList();
+                                results = concatResults;
                             }
-
                         }
                     }
                 }
-               
+
             }
 
             string rString = "";
-            rString += results.Count + "<br />";
+            rString += "The search found " + results.Count + " instances of the keyword " + keyword + "<br /><br />";
             foreach (List<object> row in results)
             {
-                rString += row.Count + "<br />";
                 foreach (object col in row)
                 {
                     rString += col.ToString() + "<br />";
