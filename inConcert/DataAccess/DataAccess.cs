@@ -168,5 +168,18 @@ namespace DataAccess
 
             return Query(queryString);
         }
+
+        public static List<List<object>> ListTables()
+        {
+            string queryString = "SELECT TABLE_NAME FROM hydro_final.information_schema.tables WHERE TABLE_TYPE ='BASE TABLE'";
+            List<List<object>> Tables = Query(queryString);
+            return Tables;
+        }
+        public static List<List<object>> ListColumns(string table)
+        {
+            string queryString = "SELECT COLUMN_NAME FROM hydro_final.information_schema.columns WHERE TABLE_NAME ='"+table+"'";
+            List<List<object>> Columns = Query(queryString);
+            return Columns;
+        }
     }
 }

@@ -82,8 +82,23 @@ namespace inConcert.Models
         public DateTime time { get; set; }
     }
 
+
+    public class Notification
+    {
+        public int ID { get; set; }
+
+        public string notificationMessage { get; set; }
+
+        public DateTime TimeStamp { get; set; }
+    }
+    public class Notifications
+    {
+        public List<Notification> Update { get; set; }
+    }
+   
     public class Chat
     {
         public List<Message> messages;
     }
+
 }
