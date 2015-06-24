@@ -13,8 +13,8 @@ namespace inConcert.Models
     public class Project
     {
         public int id { get; set; }
-        public int name { get; set; }
-        public int description { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
         public List<ProjectAuth> auths { get; set; }
         public List<Calendar> calendars { get; set; }
     }
@@ -66,7 +66,7 @@ namespace inConcert.Models
     public class Event
     {
         public int id { get; set; }
-        public int projectId { get; set; }
+        public int calendarId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
         public long time { get; set; }
@@ -80,5 +80,10 @@ namespace inConcert.Models
         public string body { get; set; }
         public string project { get; set; }
         public DateTime time { get; set; }
+    }
+
+    public class Chat
+    {
+        public List<Message> messages;
     }
 }
