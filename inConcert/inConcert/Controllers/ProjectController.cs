@@ -183,5 +183,9 @@ namespace inConcert.Controllers
             return View("chat", chat);
 
         }
+        public ActionResult CreateMessage()
+        {
+            return View("CreateMessage");
+        }
     }
 }
