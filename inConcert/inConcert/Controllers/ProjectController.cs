@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using inConcert.Models;
 using System.Collections.Generic;
 using inConcert.Helper;
-using inConcert.Models;
+
 
 namespace inConcert.Controllers
 {
@@ -74,12 +74,41 @@ namespace inConcert.Controllers
 
         }
 
-        public string Project(int id)
+        public ActionResult Project(int id)
         {
+            if (!Authorized(id))
+                return Redirect("/");
+
             Session["ProjectViewed"] = id;
-            if (Authorized(id))
-                return "Authorized";
-            return "Not Authorized";
+
+            Project project = new Project();
+            project.calendars = new List<Calendar>();
+            project.auths = new List<ProjectAuth>();
+            project.description = "This is a static description not being pulled from the database.";
+            project.name = "This is a static name";
+
+            List<List<object>> calendarResult = DataAccess.DataAccess.Read(Build.StringArray("Calendars"), Build.StringArray("id"), Build.StringArray("project_id = " + Session["ProjectViewed"]));
+            foreach (List<object> calendar in calendarResult)
+            {
+                Calendar cal = new Calendar();
+                cal.id = (int)calendar[0];
+                cal.events = new List<Event>();
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                foreach (List<object> evt in eventResult)
+                {
+                    Event e = new Event();
+                    e.id = (int)evt[0];
+                    e.calendarId = (int)evt[1];
+                    e.title = (string)evt[2];
+                    e.description = (string)evt[3];
+                    e.time = (long)evt[4];
+                    cal.events.Add(e);
+                }
+                project.calendars.Add(cal);
+            }
+
+
+            return View("Mock", project);
         }
 
         private bool Authorized(int projectId)
@@ -246,6 +275,15 @@ namespace inConcert.Controllers
 
             return View("chat", chat);
 
+        }
+        public ActionResult CreateMessage()
+        {
+            return View("CreateMessage");
+        }
+
+        public ActionResult GenerateMessage()
+        {
+            throw new NotImplementedException();
         }
     }
 }

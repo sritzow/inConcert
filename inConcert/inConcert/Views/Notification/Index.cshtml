@@ -1,5 +1,50 @@
-﻿@using Microsoft.AspNet.Identity
+﻿
+
+@*@model System.Collections.Generic.List<inConcert.Controllers.NotificationController>*@
+@*@model IEnumerable<inConcert.Controllers.NotificationController>*@
+@*@model inConcert.Controllers.NotificationController*@
+@model inConcert.Models.Notifications
+
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
 
 }
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="notificationsTable"></div>
+    </div>
+</div>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            <h3>Update</h3>
+        </th>
+        <th>
+            <h3>TimeStamp</h3>
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model.Update)
+    {
+
+        <tr>
+            <td>
+                @item.notificationMessage
+            </td>
+
+            <td>
+                @item.TimeStamp
+            </td>
+
+        </tr>
+    }
+</table>
+
+
+
