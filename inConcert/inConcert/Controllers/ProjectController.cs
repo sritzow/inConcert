@@ -34,9 +34,9 @@ namespace inConcert.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -54,8 +54,8 @@ namespace inConcert.Controllers
         public string Index()
         {
             List<string[]> values = new List<string[]>();
-            values.Add(new string[] {"A new project", "Some description"});
-            values.Add(new string[] {"Another new project", "Some other description"});
+            values.Add(new string[] { "A new project", "Some description" });
+            values.Add(new string[] { "Another new project", "Some other description" });
             //DataAccess.DataAccess.Create("projects", new string[] { "name", "description" }, values);        
 
             DataAccess.DataAccess.Update("projects", new string[] { "name" }, new string[] { "UPDATED LOL" }, new string[] { "id = 4" });
@@ -71,7 +71,7 @@ namespace inConcert.Controllers
                 }
             }
             return rString;
-            
+
         }
 
         public string Project(int id)
@@ -85,7 +85,7 @@ namespace inConcert.Controllers
         private bool Authorized(int projectId)
         {
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("project_users"), Build.StringArray("*"), Build.StringArray("project_id = " + projectId, "user_id = '" + User.Identity.GetUserId() + "'"));
-            return result.Count > 0;  
+            return result.Count > 0;
         }
 
         public ActionResult CalendarTest()
@@ -98,12 +98,12 @@ namespace inConcert.Controllers
             foreach (List<object> row in result)
             {
                 Event e = new Event();
-                e.title = (string) row[0];
-                e.description = (string) row[1];
-                e.time = (long) row[2];
+                e.title = (string)row[0];
+                e.description = (string)row[1];
+                e.time = (long)row[2];
                 calendar.events.Add(e);
                 rString += row.ToString() + "<br />";
-                
+
                 foreach (object col in row)
                 {
                     rString += col.ToString() + "<br />";
@@ -114,7 +114,7 @@ namespace inConcert.Controllers
         public void DeleteTest()
         {
             object result = DataAccess.DataAccess.Delete("Events", Build.StringArray("calendar_id=1"));
-            
+
         }
 
         public string Test()
@@ -122,5 +122,69 @@ namespace inConcert.Controllers
 
             return User.Identity.GetUserId();
         }
+        public string TableTest()
+        {
+            List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
+            string rString = "";
+            foreach (List<object> tables in tableslist)
+            {
+                foreach (object table in tables)
+                {
+                    if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
+                    {
+                        rString += table.ToString() + "<br />";
+                        List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
+                        foreach (List<object> columns in columnslist)
+                        {
+                            foreach (object column in columns)
+                            {
+                                rString += "---" + column.ToString() + "<br />";
+                            }
+                        }
+                    }
+                }
+                rString += "<br />";
+            }
+            return rString;
+        }
+        public string Search(string keyword)
+        {
+            List<List<object>> results = new List<List<object>>{};
+            List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
+            foreach (List<object> tables in tableslist)
+            {
+                foreach (object table in tables)
+                {
+                    if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
+                    {
+                        List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
+                        foreach (List<object> columns in columnslist)
+                        {
+                            foreach (object column in columns)
+                            {List<List<object>> queryresults =DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), new string[] { }, Build.StringArray(column.ToString() + "=" + keyword));
+                                List<List<object>> concatresults = results.Concat(queryresults).ToList();
+                                results = concatresults;
+                            }
+
+                        }
+                    }
+                }
+               
+            }
+
+            string rString = "";
+            rString += results.Count + "<br />";
+            foreach (List<object> row in results)
+            {
+                rString += row.Count + "<br />";
+                foreach (object col in row)
+                {
+                    rString += col.ToString() + "<br />";
+                }
+            }
+            return rString;
+        }
+
+
     }
 }
