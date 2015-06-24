@@ -212,5 +212,14 @@ namespace inConcert.Controllers
             return View("chat", chat);
 
         }
+        public ActionResult CreateMessage()
+        {
+            return View("CreateMessage");
+        }
+
+        public ActionResult GenerateMessage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
