@@ -262,7 +262,7 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
     <Content Include="Views\Project\Calendar.cshtml" />
-    <Content Include="Views\Project\Chat.cshtml" />
+    <Content Include="Views\Project\Mock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
