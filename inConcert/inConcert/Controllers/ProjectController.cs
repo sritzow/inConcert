@@ -187,5 +187,10 @@ namespace inConcert.Controllers
         {
             return View("CreateMessage");
         }
+
+        public ActionResult GenerateMessage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
