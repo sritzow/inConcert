@@ -15,22 +15,30 @@ using System.Configuration;
 
 namespace inConcert.Controllers
 {
-    public class NotificationController : Controller
+
+        public class NotificationController : Controller
     {
 
         public ActionResult Index()
         {
 
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
-            string rString = "";
+
+            Notifications Notify = new Notifications();
+            Notify.Update = new List<Notification>();
+
             foreach (List<object> row in result)
             {
-                foreach (object col in row.Skip(1))
-                {
-                    rString += col.ToString()+"~";
-                }
+                Notification x = new Notification();
+                x.notificationMessage = (string)row[1];
+                x.ID = (int)row[0];
+                x.TimeStamp = (DateTime)row[2];
+                Notify.Update.Insert(0,x);
             }
-            return View((object)rString);
+                        
+          
+
+            return View("Index",Notify);
             
 
         }

@@ -86,9 +86,13 @@ namespace inConcert.Models
     {
         public int ID { get; set; }
 
-        public string Update { get; set; }
+        public string notificationMessage { get; set; }
 
         public DateTime TimeStamp { get; set; }
+    }
+    public class Notifications
+    {
+        public List<Notification> Update { get; set; }
     }
    
 }
