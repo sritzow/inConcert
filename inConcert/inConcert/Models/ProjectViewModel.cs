@@ -82,7 +82,7 @@ namespace inConcert.Models
         public DateTime time { get; set; }
     }
 
-<<<<<<< HEAD
+
     public class Notification
     {
         public int ID { get; set; }
@@ -96,10 +96,9 @@ namespace inConcert.Models
         public List<Notification> Update { get; set; }
     }
    
-=======
     public class Chat
     {
         public List<Message> messages;
     }
->>>>>>> 7af1b734605d559aa6e0f8d5208314feb3082c1b
+
 }
