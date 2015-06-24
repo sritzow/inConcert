@@ -117,5 +117,25 @@ namespace inConcert.Controllers
 
             return User.Identity.GetUserId();
         }
+
+        public ActionResult Chat()
+        {
+            Chat chat = new Chat();
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"));
+            chat.messages = new List<Message>();
+
+            foreach (List<object> row in result)
+            {
+                Message msg = new Message();
+                msg.from = (string)row[1];
+                msg.to = (string)row[2];
+                msg.body = (string)row[3];
+                msg.project = (string)row[4];
+                chat.messages.Add(msg);
+            }
+
+            return View("chat", chat);
+
+        }
     }
 }
