@@ -295,44 +295,74 @@ namespace inConcert.Controllers
             return View("CreateMessage");
         }
 
-        public ActionResult GenerateMessage(Message msg)
+        public ActionResult GenerateMessage(Message msg = null, Chat chat = null)
         {
-            if (msg.to == null)
+
+            if (msg != null && chat.message == null)
             {
 
-                msg.to = "failed to send";
+                if (msg.to == null) {
 
-            } if (msg.from == null)
-            {
+                    msg.to = "failed to send";
 
-                msg.from = "failed to send";
+                } if (msg.from == null) {
 
-            } if (msg.body == null)
-            {
+                    msg.from = "failed to send";
 
-                msg.body = "Error";
+                } if (msg.body == null) {
 
-            } if (msg.project == null)
-            {
+                    msg.body = "Error";
 
-                msg.project = "inConcert";
+                } if (msg.project == null) {
+
+                    msg.project = "inConcert"; 
+
+                }
+
+
+                inConcert.Helper.InsertToMessageTable.UsingMessageModel(msg);
+
+            } else if (chat.message != null && msg == null) {
+
+
+                if (chat.message.to == null) {
+
+                    chat.message.to = "failed to send";
+
+
+                } if (chat.message.from == null) {
+
+                    chat.message.from = "failed to send";
+
+                } if (chat.message.body == null) {
+
+                    chat.message.body = "Error";
+
+                } if (msg.project == null) {
+
+                    chat.message.project = "inConcert"; 
+
+                }
+
+                inConcert.Helper.InsertToMessageTable.UsingChatModel(chat);
 
             }
 
-            msg.time = DateTime.Now;
-            List<string[]> values = new List<string[]>();
-            string[] message_values = { msg.to, msg.from, msg.body, msg.project, msg.time.ToString() };
-            string[] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
 
-            values.Add(message_values);
+         //   msg.time = DateTime.Now;
+         //   List<string[]> values = new List<string[]>();
+         //   string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
+         //   string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
 
-            DataAccess.DataAccess.Create(
+         //   values.Add(message_values);
 
-                "messages",
-                column_names,
-                values
+         //   DataAccess.DataAccess.Create(
 
-            );
+         //       "messages",
+         //       column_names,
+         //       values
+
+         //   );
 
             return View("ChatRoom", Chat());
 

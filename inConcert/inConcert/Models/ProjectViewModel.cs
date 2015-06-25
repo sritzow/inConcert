@@ -99,6 +99,7 @@ namespace inConcert.Models
     public class Chat
     {
         public List<Message> messages;
+        public Message message;
     }
 
 }

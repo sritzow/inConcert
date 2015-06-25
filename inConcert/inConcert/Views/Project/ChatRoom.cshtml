@@ -1,0 +1,25 @@
+﻿<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css"/>
+
+@model inConcert.Models.Chat
+@using inConcert.Models;
+
+@Html.ActionLink("back", "index", "home")
+@Html.ActionLink("Create Message", "CreateMessage", "Project")
+
+<br />
+
+<div id="chat-window">
+
+    @foreach (Message msg in @Model.messages)
+    {
+            <span>--[@msg.project] (@msg.from)=>(@msg.to) - @msg.body</span><br />
+    }
+
+</div>
+<div id="chat-box">
+    @using (Html.BeginForm("GenerateMessage", "Project"))
+    {
+        @Html.TextBoxFor(msg => msg.message.body)
+        <input type="submit" value="Send"/>
+    }
+</div>

@@ -1,0 +1,18 @@
+﻿<h2>CreateMessage</h2>
+@model inConcert.Models.Message
+
+@Html.ActionLink("back", "index", "home")
+
+@using (Html.BeginForm("GenerateMessage", "Project"))
+{
+
+    <ul>
+       <li> body   : @Html.TextAreaFor(msg => msg.body)</li>
+       <li> to     : @Html.TextAreaFor(msg => msg.to)</li>
+       <li> from   : @Html.TextAreaFor(msg => msg.from)</li>
+       <li> project: @Html.TextAreaFor(msg => msg.project)</li>
+    </ul>
+
+    <input type="submit" value="Send"/>
+
+}
