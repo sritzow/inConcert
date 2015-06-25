@@ -217,39 +217,47 @@ namespace inConcert.Controllers
             }
             return rString;
         }
-        public string Search(string keyword)
+        public string Search(string keyword, List<string> tables=null)
         {
-             
-            List<List<object>> results = new List<List<object>> { };
-            List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
-            foreach (List<object> tables in tableslist)
+            string rString = "";
+            List<List<object>> tableslist=new List<List<object>>();
+            if (tables == null)
             {
-                foreach (object table in tables)
+                tableslist = DataAccess.DataAccess.ListTables();
+            }
+            else
+            {
+                foreach (string table in tables)
+                {
+                    List<object> list = new List<object> { table };
+                    tableslist.Add(list);
+                }
+            }
+            foreach (dynamic allTables in tableslist)
+            {
+                foreach (object table in allTables)
                 {
                     if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
                     {
+                        rString += "<b>" + table.ToString() + "</b><br />";
                         List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
                         foreach (List<object> columns in columnslist)
                         {
                             foreach (object column in columns)
                             {
-                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword+"%'"));
-                                List<List<object>> concatResults = results.Concat(queryResults).ToList();
-                                results = concatResults;
+                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
+                                foreach (List<object> row in queryResults)
+                                {
+                                    int i = 0;
+                                    foreach (object col in row)
+                                    {
+                                        rString += columnslist[i][0].ToString()+": "+col.ToString() + "<br />";
+                                        i++;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-
-            }
-
-            string rString = "";
-            rString += "The search found " + results.Count + " instances of the keyword " + keyword + "<br /><br />";
-            foreach (List<object> row in results)
-            {
-                foreach (object col in row)
-                {
-                    rString += col.ToString() + "<br />";
                 }
             }
             return rString;
@@ -289,28 +297,32 @@ namespace inConcert.Controllers
 
         public ActionResult GenerateMessage(Message msg)
         {
-            if (msg.to == null) {
+            if (msg.to == null)
+            {
 
                 msg.to = "failed to send";
 
-            } if (msg.from == null) {
+            } if (msg.from == null)
+            {
 
                 msg.from = "failed to send";
 
-            } if (msg.body == null) {
+            } if (msg.body == null)
+            {
 
                 msg.body = "Error";
 
-            } if (msg.project == null) {
+            } if (msg.project == null)
+            {
 
-                msg.project = "inConcert"; 
+                msg.project = "inConcert";
 
             }
 
             msg.time = DateTime.Now;
             List<string[]> values = new List<string[]>();
-            string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
-            string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
+            string[] message_values = { msg.to, msg.from, msg.body, msg.project, msg.time.ToString() };
+            string[] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
 
             values.Add(message_values);
 
