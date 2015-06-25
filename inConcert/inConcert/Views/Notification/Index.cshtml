@@ -1,8 +1,4 @@
 ﻿
-
-@*@model System.Collections.Generic.List<inConcert.Controllers.NotificationController>*@
-@*@model IEnumerable<inConcert.Controllers.NotificationController>*@
-@*@model inConcert.Controllers.NotificationController*@
 @model inConcert.Models.Notifications
 
 @using Microsoft.AspNet.Identity
@@ -11,14 +7,7 @@
 
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div id="notificationsTable"></div>
-    </div>
-</div>
-
-
-<table class="table">
+<table class="table" id="notificationsTable">
     <tr>
 
         <th>
@@ -34,17 +23,8 @@
     {
 
         <tr>
-            <td>
-                @item.notificationMessage
-            </td>
-
-            <td>
-                @item.TimeStamp
-            </td>
-
+            @Html.Partial("NotificationPartialView", item)
         </tr>
     }
 </table>
-
-
 
