@@ -298,54 +298,19 @@ namespace inConcert.Controllers
 
         public ActionResult GenerateMessage(Chat chat)
         {
-<<<<<<< HEAD
-
-            if (msg != null && chat.message == null)
-            {
-
-                if (msg.to == null) {
-
-                    msg.to = "failed to send";
-
-                } if (msg.from == null) {
-
-                    msg.from = "failed to send";
-
-                } if (msg.body == null) {
-=======
->>>>>>> brandon
 
 
-<<<<<<< HEAD
-                } if (msg.project == null) {
 
-                    msg.project = "inConcert"; 
-
-                }
-
-
-                inConcert.Helper.InsertToMessageTable.UsingMessageModel(msg);
-
-            } else if (chat.message != null && msg == null) {
-
-
-                if (chat.message.to == null) {
-=======
                 if (chat.message.to == null)
                 {
 
                     chat.message.to = "No recipient specified";
->>>>>>> brandon
 
                 } 
 
-<<<<<<< HEAD
 
-                } if (chat.message.from == null) {
-=======
                 if (chat.message.from == null)
                 {
->>>>>>> brandon
 
                     chat.message.from = "no sender specified";
 
