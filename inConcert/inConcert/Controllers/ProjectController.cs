@@ -278,6 +278,7 @@ namespace inConcert.Controllers
                 msg.to = (string)row[2];
                 msg.body = (string)row[3];
                 msg.project = (string)row[4];
+                msg.time = (DateTime)row[5];
                 chat.messages.Add(msg);
             }
 
@@ -295,8 +296,9 @@ namespace inConcert.Controllers
             return View("CreateMessage");
         }
 
-        public ActionResult GenerateMessage(Message msg = null, Chat chat = null)
+        public ActionResult GenerateMessage(Chat chat)
         {
+<<<<<<< HEAD
 
             if (msg != null && chat.message == null)
             {
@@ -310,9 +312,11 @@ namespace inConcert.Controllers
                     msg.from = "failed to send";
 
                 } if (msg.body == null) {
+=======
+>>>>>>> brandon
 
-                    msg.body = "Error";
 
+<<<<<<< HEAD
                 } if (msg.project == null) {
 
                     msg.project = "inConcert"; 
@@ -326,43 +330,42 @@ namespace inConcert.Controllers
 
 
                 if (chat.message.to == null) {
+=======
+                if (chat.message.to == null)
+                {
 
-                    chat.message.to = "failed to send";
+                    chat.message.to = "No recipient specified";
+>>>>>>> brandon
 
+                } 
+
+<<<<<<< HEAD
 
                 } if (chat.message.from == null) {
+=======
+                if (chat.message.from == null)
+                {
+>>>>>>> brandon
 
-                    chat.message.from = "failed to send";
+                    chat.message.from = "no sender specified";
 
-                } if (chat.message.body == null) {
+                } 
+                
+                if (chat.message.body == null)
+                {
 
-                    chat.message.body = "Error";
+                    chat.message.body = "no text provided";
 
-                } if (msg.project == null) {
+                } 
+                
+                if (chat.message.project == null)
+                {
 
-                    chat.message.project = "inConcert"; 
+                    chat.message.project = "test";
 
                 }
 
-                inConcert.Helper.InsertToMessageTable.UsingChatModel(chat);
-
-            }
-
-
-         //   msg.time = DateTime.Now;
-         //   List<string[]> values = new List<string[]>();
-         //   string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
-         //   string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
-
-         //   values.Add(message_values);
-
-         //   DataAccess.DataAccess.Create(
-
-         //       "messages",
-         //       column_names,
-         //       values
-
-         //   );
+                InsertToMessageTable.UsingChatModel(chat);
 
             return View("ChatRoom", Chat());
 

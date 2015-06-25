@@ -100,6 +100,13 @@ namespace inConcert.Models
     {
         public List<Message> messages;
         public Message message;
+        public Chat()
+        {
+            if (this.message == null)
+            {
+                this.message = new Message();
+            }
+        }
     }
 
 }
