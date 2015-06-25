@@ -1,0 +1,19 @@
+﻿body {
+}
+
+#chat-window {
+
+    width: 600px;
+    height: 100px;
+    overflow-y: scroll;
+    border: 2px solid black;
+
+}
+
+#chat-box {
+
+    width: 600px;
+    height: 30px;
+    border: 2px solid black;
+
+}
