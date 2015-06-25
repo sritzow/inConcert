@@ -1,0 +1,18 @@
+﻿@model inConcert.Models.Notification
+
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+
+}
+
+   
+       
+<td>
+    @Html.DisplayFor(model => model.notificationMessage)
+</td>
+
+<td>
+    @Html.DisplayFor(model => model.TimeStamp)
+</td>
+
