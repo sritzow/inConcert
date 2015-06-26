@@ -199,8 +199,9 @@ namespace inConcert.Controllers
             return myList;
         }
 
-        public void TableSearch(object table, string keyword)
+        public List<List<object>> TableSearch(object table, string keyword)
         {
+            List<List<object>> result = new List<List<object>>();
             List<object> hitsByID = new List<object>();
             List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
             foreach (List<object> columns in columnslist)
@@ -210,25 +211,23 @@ namespace inConcert.Controllers
                     List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
 
                     foreach (List<object> row in queryResults)
-                    { 
+                    {
                         if (!hitsByID.Contains(row[0]))
                         {
-                            int i = 0;
                             hitsByID.Add(row[0]);
-                            foreach (object col in row)
-                            {
-                                i++;
-                            }
+                            result.Add(row);
                         }
 
                     }
                 }
             }
+            return result;
         }
 
         public ActionResult Search(string keyword, List<string> tablesToSearch = null)
         {
-            
+            SearchResults searchResult = new SearchResults();
+
             List<List<object>> tablesWillSearch = new List<List<object>>();
 
             if (tablesToSearch == null)
@@ -244,15 +243,57 @@ namespace inConcert.Controllers
                 }
             }
 
-            foreach (dynamic tables in tablesWillSearch)
+            foreach (List<object> tables in tablesWillSearch)
             {
                 if (!(tables[0].ToString().StartsWith("Asp") || tables[0].ToString().StartsWith("__")))
                 {
-                    TableSearch(tables[0],keyword);
+                    List<List<object>> tableResults = TableSearch(tables[0], keyword);
+                    foreach (List<object> result in tableResults)
+                    {
+                        switch (tables[0].ToString())
+                        {
+                            case "Messages":
+                                Message m = new Message();
+                                m.id = (int)result[0];
+                                m.from = (string)result[1];
+                                m.to = (string)result[2];
+                                m.body = (string)result[3];
+                                m.project = (string)result[4];
+                                m.time = (DateTime)result[5];
+                                searchResult.messages.Add(m);
+                                break;
+                            case "Projects":
+                                Project p = new Project();
+                                p.id = (int)result[0];
+                                p.name = (string)result[1];
+                                p.description = (string)result[2];
+                                break;
+                            case "Events":
+                                Event e = new Event();
+                                e.id = (int)result[0];
+                                e.calendarId = (int)result[1];
+                                e.title = (string)result[2];
+                                e.description = (string)result[3];
+                                e.occurencetime = (DateTime)result[4];
+                                e.time = (DateTime)result[5];
+                                searchResult.events.Add(e);
+                                break;
+                            case "User":
+                                User u = new User();
+                                u.id = (int)result[0];
+                                break;
+                            default:
+                                Other o = new Other();
+                                o.result = result;
+                                o.table = (string)tables[0];
+                                searchResult.others.Add(o);
+                                break;
+                        }
+                    }
                 }
             }
-            
-            return View();
+
+            return View(searchResult);
         }
 
         public Chat Chat()
