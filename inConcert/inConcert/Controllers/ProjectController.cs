@@ -101,7 +101,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime)evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -139,7 +139,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime)evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -170,7 +170,7 @@ namespace inConcert.Controllers
                 Event e = new Event();
                 e.title = (string)row[0];
                 e.description = (string)row[1];
-                e.time = (long)row[2];
+                e.time = (DateTime)row[2];
                 calendar.events.Add(e);
                 rString += row.ToString() + "<br />";
 
