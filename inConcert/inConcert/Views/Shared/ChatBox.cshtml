@@ -1,10 +1,8 @@
-﻿<h2>This is my chat box partial view</h2>
-<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
+﻿<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
 
 @model inConcert.Models.Chat
 @using inConcert.Models;
 
-<br />
 
 <div id="chat-window">
 
@@ -14,3 +12,7 @@
     }
 
 </div>
+<script>
+    var objDiv = document.getElementById("chat-window");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>

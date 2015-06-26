@@ -273,6 +273,7 @@
     <Content Include="Views\Shared\ChatBox.cshtml" />
     <Content Include="Views\Shared\ChatInput.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\Chat\ContactDialog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

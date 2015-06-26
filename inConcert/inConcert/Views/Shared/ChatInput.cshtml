@@ -1,13 +1,29 @@
-﻿@model inConcert.Models.Message
-<h2>This is my chat input partial view</h2>
+﻿<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
 
+@model inConcert.Models.Message
+
+
+<div id="chat-box">
 @using (Html.BeginForm("GenerateMessage", "Chat"))
 {
-    
-    <ul>
-        <li> body   : @Html.TextAreaFor(msg => msg.body)</li>
-    </ul>
 
-    <input type="submit" value="Send" />
+@Html.TextBoxFor(msg => msg.body, new { @class = "text-input" });
+    <input type="submit" id="submit-button" value="Send" />
 
 }
+</div>
+
+<text>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            console.log("Fuckin jquery how do you work?");
+            $('#submit-button').click(function () {
+                $('#body').val("");
+            });
+        });
+
+    </script>
+
+</text>

@@ -26,26 +26,11 @@ namespace inConcert.Controllers
             return View();
         }
 
-        public Chat Chat()
+        public ActionResult ContactDialog()
         {
-            Chat chat = new Chat();
-            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"));
-            chat.messages = new List<Message>();
-
-            foreach (List<object> row in result)
-            {
-                Message msg = new Message();
-                msg.from = (string)row[1];
-                msg.to = (string)row[2];
-                msg.body = (string)row[3];
-                msg.project = (string)row[4];
-                msg.time = (DateTime)row[5];
-                chat.messages.Add(msg);
-            }
-
-            return chat;
-
+            return View();
         }
+
         public ActionResult GenerateMessage(Message msg)
         {
 
@@ -81,6 +66,27 @@ namespace inConcert.Controllers
             InsertToMessageTable.UsingMessageModel(msg);
 
             return View("Index", Chat());
+
+        }
+
+        public Chat Chat()
+        {
+            Chat chat = new Chat();
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"));
+            chat.messages = new List<Message>();
+
+            foreach (List<object> row in result)
+            {
+                Message msg = new Message();
+                msg.from = (string)row[1];
+                msg.to = (string)row[2];
+                msg.body = (string)row[3];
+                msg.project = (string)row[4];
+                msg.time = (DateTime)row[5];
+                chat.messages.Add(msg);
+            }
+
+            return chat;
 
         }
     }

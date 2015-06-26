@@ -1,10 +1,21 @@
-﻿@model inConcert.Models.Chat
+﻿
+@model inConcert.Models.Chat
 <h1>This is the index page</h1>
-<br />
-<p>This is the chatbox partial view</p>
-<br />
-@Html.Partial("ChatBox", @Model)
-<br />
-<p>This the chatInput partial view</p>
-<br />
-@Html.Partial("ChatInput", @Model.message) 
+<div id="main">
+
+    <div id="dialog">
+
+        @Html.Partial("ChatBox", @Model)
+        @Html.Partial("ChatInput", @Model.message) 
+
+    </div>
+ 
+
+    <div id="contacts">
+
+        @Html.Partial("ContactDialog") 
+
+    </div>   
+    <div class="clearfix">
+    </div>
+</div>
