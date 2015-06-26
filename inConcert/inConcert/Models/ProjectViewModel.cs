@@ -97,6 +97,11 @@ namespace inConcert.Models
     {
         public List<Notification> Update { get; set; }
     }
+
+    public class Contacts
+    {
+
+    }
    
     public class Chat
     {
