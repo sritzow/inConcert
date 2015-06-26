@@ -70,6 +70,7 @@ namespace inConcert.Models
         public int calendarId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
+        public DateTime occurencetime { get; set; }
         public DateTime time { get; set; }
     }
 
@@ -113,6 +114,28 @@ namespace inConcert.Models
                 this.message = new Message();
             }
         }
+    }
+
+    public class SearchResults
+    {
+        public List<Message> messages = new List<Message>();
+        public List<Event> events = new List<Event>();
+        public List<User> users = new List<User>();
+        public List<Project> projects = new List<Project>();
+        public List<dynamic> others = new List<dynamic>();
+    }
+
+    public class Other
+    {
+        public string table { get; set; }
+        public List<object> result = new List<object>();
+
+    }
+
+    public class User
+    {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 
 }
