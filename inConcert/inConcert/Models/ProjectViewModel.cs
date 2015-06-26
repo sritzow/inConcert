@@ -109,4 +109,18 @@ namespace inConcert.Models
         }
     }
 
+    public class SearchResults
+    {
+        public List<Message> messages;
+        public List<Event> events;
+        public List<User> users;
+        public List<Project> projects;
+    }
+
+    public class User
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+    }
+
 }

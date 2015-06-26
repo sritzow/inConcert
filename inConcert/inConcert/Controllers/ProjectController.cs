@@ -181,94 +181,78 @@ namespace inConcert.Controllers
             }
             return View("Calendar", calendar);
         }
-        public void DeleteTest()
-        {
-            object result = DataAccess.DataAccess.Delete("Events", Build.StringArray("calendar_id=1"));
-
-        }
 
         public string Test()
         {
 
             return User.Identity.GetUserId();
         }
-        public string TableTest()
+
+        public List<List<object>> SpecialTables()
         {
-            List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
-            string rString = "";
-            foreach (List<object> tables in tableslist)
+            List<string> tables = new List<string> { "Projects", "Events", "Messages", "Users" };
+            List<List<object>> myList = new List<List<object>>();
+            foreach (string table in tables)
             {
-                foreach (object table in tables)
+                myList.Add(new List<object> { table });
+            }
+            return myList;
+        }
+
+        public void TableSearch(object table, string keyword)
+        {
+            List<object> hitsByID = new List<object>();
+            List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
+            foreach (List<object> columns in columnslist)
+            {
+                foreach (object column in columns)
                 {
-                    if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
-                    {
-                        rString += table.ToString() + "<br />";
-                        List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
-                        foreach (List<object> columns in columnslist)
+                    List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
+
+                    foreach (List<object> row in queryResults)
+                    { 
+                        if (!hitsByID.Contains(row[0]))
                         {
-                            foreach (object column in columns)
+                            int i = 0;
+                            hitsByID.Add(row[0]);
+                            foreach (object col in row)
                             {
-                                rString += "---" + column.ToString() + "<br />";
+                                i++;
                             }
                         }
+
                     }
                 }
-                rString += "<br />";
             }
-            return rString;
         }
-        public ActionResult Search(string keyword, List<string> tables = null)
+
+        public ActionResult Search(string keyword, List<string> tablesToSearch = null)
         {
-            string rString = "";
-            List<List<object>> tableslist = new List<List<object>>();
-            if (tables == null)
+            List<List<object>> tablesWillSearch = new List<List<object>>();
+
+            if (tablesToSearch == null)
             {
-                tableslist = DataAccess.DataAccess.ListTables();
+                tablesWillSearch = DataAccess.DataAccess.ListTables();
             }
             else
             {
-                foreach (string table in tables)
+                foreach (string table in tablesToSearch)
                 {
                     List<object> list = new List<object> { table };
-                    tableslist.Add(list);
+                    tablesWillSearch.Add(list);
                 }
             }
-            foreach (dynamic allTables in tableslist)
+
+            foreach (dynamic tables in tablesWillSearch)
             {
-                foreach (object table in allTables)
+                if (!(tables[0].ToString().StartsWith("Asp") || tables[0].ToString().StartsWith("__")))
                 {
-                    if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
-                    {
-                        rString += "<b>" + table.ToString() + "</b><br />";
-                        List<object> hitsByID = new List<object>();
-
-                        List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
-                        foreach (List<object> columns in columnslist)
-                        {
-                            foreach (object column in columns)
-                            {
-                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
-
-                                foreach (List<object> row in queryResults)
-                                {
-                                    if (!hitsByID.Contains(row[0]))
-                                    {
-                                        int i = 0;
-                                        hitsByID.Add(row[0]);
-                                        foreach (object col in row)
-                                        {
-                                            rString += columnslist[i][0].ToString() + ": " + col.ToString() + "<br />";
-                                            i++;
-                                        }
-                                        rString += "<br />";
-                                    }
-
-                                }
-                            }
-                        }
-                    }
+                    TableSearch(tables[0],keyword);
                 }
             }
+
+
+
             return View();
         }
 
