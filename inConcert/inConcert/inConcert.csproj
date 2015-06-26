@@ -269,6 +269,7 @@
     <Content Include="Views\Project\Mock.cshtml" />
     <Content Include="Views\Project\ChatRoom.cshtml" />
     <Content Include="Views\Project\CreateMessage.cshtml" />
+    <Content Include="Views\Project\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

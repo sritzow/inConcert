@@ -217,10 +217,10 @@ namespace inConcert.Controllers
             }
             return rString;
         }
-        public string Search(string keyword, List<string> tables=null)
+        public ActionResult Search(string keyword, List<string> tables = null)
         {
             string rString = "";
-            List<List<object>> tableslist=new List<List<object>>();
+            List<List<object>> tableslist = new List<List<object>>();
             if (tables == null)
             {
                 tableslist = DataAccess.DataAccess.ListTables();
@@ -240,27 +240,36 @@ namespace inConcert.Controllers
                     if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
                     {
                         rString += "<b>" + table.ToString() + "</b><br />";
+                        List<object> hitsByID = new List<object>();
+
                         List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
                         foreach (List<object> columns in columnslist)
                         {
                             foreach (object column in columns)
                             {
                                 List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
+
                                 foreach (List<object> row in queryResults)
                                 {
-                                    int i = 0;
-                                    foreach (object col in row)
+                                    if (!hitsByID.Contains(row[0]))
                                     {
-                                        rString += columnslist[i][0].ToString()+": "+col.ToString() + "<br />";
-                                        i++;
+                                        int i = 0;
+                                        hitsByID.Add(row[0]);
+                                        foreach (object col in row)
+                                        {
+                                            rString += columnslist[i][0].ToString() + ": " + col.ToString() + "<br />";
+                                            i++;
+                                        }
+                                        rString += "<br />";
                                     }
+                                    
                                 }
                             }
                         }
                     }
                 }
             }
-            return rString;
+            return View();
         }
 
 
@@ -301,46 +310,56 @@ namespace inConcert.Controllers
             if (msg != null && chat.message == null)
             {
 
-                if (msg.to == null) {
+                if (msg.to == null)
+                {
 
                     msg.to = "failed to send";
 
-                } if (msg.from == null) {
+                } if (msg.from == null)
+                {
 
                     msg.from = "failed to send";
 
-                } if (msg.body == null) {
+                } if (msg.body == null)
+                {
 
                     msg.body = "Error";
 
-                } if (msg.project == null) {
+                } if (msg.project == null)
+                {
 
-                    msg.project = "inConcert"; 
+                    msg.project = "inConcert";
 
                 }
 
 
                 inConcert.Helper.InsertToMessageTable.UsingMessageModel(msg);
 
-            } else if (chat.message != null && msg == null) {
+            }
+            else if (chat.message != null && msg == null)
+            {
 
 
-                if (chat.message.to == null) {
+                if (chat.message.to == null)
+                {
 
                     chat.message.to = "failed to send";
 
 
-                } if (chat.message.from == null) {
+                } if (chat.message.from == null)
+                {
 
                     chat.message.from = "failed to send";
 
-                } if (chat.message.body == null) {
+                } if (chat.message.body == null)
+                {
 
                     chat.message.body = "Error";
 
-                } if (msg.project == null) {
+                } if (msg.project == null)
+                {
 
-                    chat.message.project = "inConcert"; 
+                    chat.message.project = "inConcert";
 
                 }
 
@@ -349,20 +368,20 @@ namespace inConcert.Controllers
             }
 
 
-         //   msg.time = DateTime.Now;
-         //   List<string[]> values = new List<string[]>();
-         //   string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
-         //   string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
+            //   msg.time = DateTime.Now;
+            //   List<string[]> values = new List<string[]>();
+            //   string[] message_values = {msg.to, msg.from, msg.body, msg.project, msg.time.ToString()};
+            //   string [] column_names = Build.StringArray("_to", "_from", "_body", "_project", "_time");
 
-         //   values.Add(message_values);
+            //   values.Add(message_values);
 
-         //   DataAccess.DataAccess.Create(
+            //   DataAccess.DataAccess.Create(
 
-         //       "messages",
-         //       column_names,
-         //       values
+            //       "messages",
+            //       column_names,
+            //       values
 
-         //   );
+            //   );
 
             return View("ChatRoom", Chat());
 
