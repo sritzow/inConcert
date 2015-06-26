@@ -104,6 +104,7 @@ namespace inConcert.Controllers
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
             project.chat = Chat();
+
             List<List<object>> calendarResult = DataAccess.DataAccess.Read(Build.StringArray("Calendars"), Build.StringArray("id"), Build.StringArray("project_id = " + Session["ProjectViewed"]));
             foreach (List<object> calendar in calendarResult)
             {
@@ -123,7 +124,6 @@ namespace inConcert.Controllers
                 }
                 project.calendars.Add(cal);
             }
-
 
             return View("Mock", project);
         }
@@ -234,7 +234,6 @@ namespace inConcert.Controllers
                             hitsByID.Add(row[0]);
                             result.Add(row);
                         }
-
                     }
                 }
             }
