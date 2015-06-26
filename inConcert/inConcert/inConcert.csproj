@@ -274,6 +274,8 @@
     <Content Include="Views\Shared\ChatInput.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\ContactDialog.cshtml" />
+    <Content Include="Views\Project\Search.cshtml" />
+    <Content Include="Views\Project\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

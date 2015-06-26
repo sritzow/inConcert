@@ -74,6 +74,21 @@ namespace inConcert.Controllers
 
         }
 
+        public ActionResult Projects()
+        {
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("project_users"), where: Build.StringArray("user_id = '" + User.Identity.GetUserId() + "'"));
+            ProjectViewModel projects = new ProjectViewModel();
+            projects.auths = new List<ProjectAuth>();
+            foreach (List<object> auth in result)
+            {
+                ProjectAuth a = new ProjectAuth();
+                a.projectId = (int) auth[0];
+                projects.auths.Add(a);
+            }
+
+            return View("Projects", projects);
+        }
+
         public ActionResult Project(int id)
         {
             if (!Authorized(id))
@@ -93,7 +108,7 @@ namespace inConcert.Controllers
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
-                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
@@ -101,7 +116,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime) evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -121,6 +136,7 @@ namespace inConcert.Controllers
         {
             Project project = new Project();
             project.calendars = new List<Calendar>();
+            project.chat = Chat();
             project.auths = new List<ProjectAuth>();
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
@@ -131,7 +147,7 @@ namespace inConcert.Controllers
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
-                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
@@ -139,7 +155,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime)evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -170,7 +186,7 @@ namespace inConcert.Controllers
                 Event e = new Event();
                 e.title = (string)row[0];
                 e.description = (string)row[1];
-                e.time = (long)row[2];
+                e.time = (DateTime)row[2];
                 calendar.events.Add(e);
                 rString += row.ToString() + "<br />";
 
@@ -217,45 +233,60 @@ namespace inConcert.Controllers
             }
             return rString;
         }
-        public string Search(string keyword)
+        public ActionResult Search(string keyword, List<string> tables = null)
         {
-             
-            List<List<object>> results = new List<List<object>> { };
-            List<List<object>> tableslist = DataAccess.DataAccess.ListTables();
-            foreach (List<object> tables in tableslist)
+            string rString = "";
+            List<List<object>> tableslist = new List<List<object>>();
+            if (tables == null)
             {
-                foreach (object table in tables)
+                tableslist = DataAccess.DataAccess.ListTables();
+            }
+            else
+            {
+                foreach (string table in tables)
+                {
+                    List<object> list = new List<object> { table };
+                    tableslist.Add(list);
+                }
+            }
+            foreach (dynamic allTables in tableslist)
+            {
+                foreach (object table in allTables)
                 {
                     if (!(table.ToString().StartsWith("Asp") || table.ToString().StartsWith("__")))
                     {
+                        rString += "<b>" + table.ToString() + "</b><br />";
+                        List<object> hitsByID = new List<object>();
+
                         List<List<object>> columnslist = DataAccess.DataAccess.ListColumns(table.ToString());
                         foreach (List<object> columns in columnslist)
                         {
                             foreach (object column in columns)
                             {
-                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword+"%'"));
-                                List<List<object>> concatResults = results.Concat(queryResults).ToList();
-                                results = concatResults;
+                                List<List<object>> queryResults = DataAccess.DataAccess.Read(Build.StringArray(table.ToString()), null, Build.StringArray(column.ToString() + " LIKE '%" + keyword + "%'"));
+
+                                foreach (List<object> row in queryResults)
+                                {
+                                    if (!hitsByID.Contains(row[0]))
+                                    {
+                                        int i = 0;
+                                        hitsByID.Add(row[0]);
+                                        foreach (object col in row)
+                                        {
+                                            rString += columnslist[i][0].ToString() + ": " + col.ToString() + "<br />";
+                                            i++;
+                                        }
+                                        rString += "<br />";
+                                    }
+
+                                }
                             }
                         }
                     }
                 }
-
             }
-
-            string rString = "";
-            rString += "The search found " + results.Count + " instances of the keyword " + keyword + "<br /><br />";
-            foreach (List<object> row in results)
-            {
-                foreach (object col in row)
-                {
-                    rString += col.ToString() + "<br />";
-                }
-            }
-            return rString;
+            return View();
         }
-
-
 
         public Chat Chat()
         {
@@ -273,9 +304,7 @@ namespace inConcert.Controllers
                 msg.time = (DateTime)row[5];
                 chat.messages.Add(msg);
             }
-
             return chat;
-
         }
 
         public ActionResult ChatRoom()
@@ -290,40 +319,28 @@ namespace inConcert.Controllers
 
         public ActionResult GenerateMessage(Chat chat)
         {
+            if (chat.message.to == null)
+            {
+                chat.message.to = "No recipient specified";
+            }
 
+            if (chat.message.from == null)
+            {
+                chat.message.from = "no sender specified";
+            }
 
-                if (chat.message.to == null)
-                {
+            if (chat.message.body == null)
+            {
+                chat.message.body = "no text provided";
+            }
 
-                    chat.message.to = "No recipient specified";
+            if (chat.message.project == null)
+            {
+                chat.message.project = "test";
+            }
 
-                } 
-
-                if (chat.message.from == null)
-                {
-
-                    chat.message.from = "no sender specified";
-
-                } 
-                
-                if (chat.message.body == null)
-                {
-
-                    chat.message.body = "no text provided";
-
-                } 
-                
-                if (chat.message.project == null)
-                {
-
-                    chat.message.project = "test";
-
-                }
-
-                InsertToMessageTable.UsingChatModel(chat);
-
+            InsertToMessageTable.UsingChatModel(chat);
             return View("ChatRoom", Chat());
-
         }
     }
 }
