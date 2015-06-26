@@ -1,7 +1,46 @@
-﻿
+﻿@model inConcert.Models.SearchResults
 @{
     ViewBag.Title = "Search";
 }
 
 <h2>Search</h2>
 
+@foreach (var project in Model.projects)
+{
+    <h4>Project</h4>
+    <p><b>@project.name</b></p>
+    <p>@project.description</p>
+    <hr>
+}
+
+@foreach (var myEvent in Model.events)
+{
+    <h4>Event</h4>
+    <p>@myEvent.occurencetime</p>
+    <p><b>@myEvent.title</b></p>
+    <p>@myEvent.description</p>
+    <hr>
+}
+
+@foreach (var message in Model.messages)
+{
+    <h4>Message</h4>
+    <p>@message.time</p>
+    <p>From: @message.from, To: @message.to</p>
+    <p>@message.from</p>
+    <hr>
+}
+
+@foreach (var user in Model.users)
+{
+    <h4>User</h4>
+    <p><b>@user.id</b></p>
+    <hr>
+}
+@foreach (var other in Model.others)
+{
+    <h4>@other.table</h4>
+    foreach (var row in other.result)
+        {<p>@row</p>}
+    <hr>
+}
