@@ -136,6 +136,7 @@ namespace inConcert.Controllers
         {
             Project project = new Project();
             project.calendars = new List<Calendar>();
+            project.chat = Chat();
             project.auths = new List<ProjectAuth>();
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
