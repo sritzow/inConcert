@@ -75,6 +75,22 @@ namespace inConcert.Controllers
 
         }
 
+        public ActionResult Projects()
+        {
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("project_users"), where: Build.StringArray("user_id = '" + User.Identity.GetUserId() + "'"));
+            ProjectViewModel projects = new ProjectViewModel();
+            projects.auths = new List<ProjectAuth>();
+            foreach (List<object> auth in result)
+            {
+                ProjectAuth a = new ProjectAuth();
+                a.projectId = (int)auth[0];
+                projects.auths.Add(a);
+            }
+
+            return View("Projects", projects);
+        }
+
+
         public ActionResult Project(int id)
         {
             if (!Authorized(id))
@@ -87,14 +103,14 @@ namespace inConcert.Controllers
             project.auths = new List<ProjectAuth>();
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
-
+            project.chat = Chat();
             List<List<object>> calendarResult = DataAccess.DataAccess.Read(Build.StringArray("Calendars"), Build.StringArray("id"), Build.StringArray("project_id = " + Session["ProjectViewed"]));
             foreach (List<object> calendar in calendarResult)
             {
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
-                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
