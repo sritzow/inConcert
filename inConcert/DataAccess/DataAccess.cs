@@ -80,7 +80,7 @@ namespace DataAccess
                     conn.Close();
             }
         }
-        public static List<List<object>> Read(string[] tables, string[] columns = null, string[] where = null)
+        public static List<List<object>> Read(string[] tables, string[] columns = null, string[] where = null, string orderby = null)
         {
             string queryString = "SELECT ";
             if (columns == null)
@@ -110,6 +110,11 @@ namespace DataAccess
                 else
                     queryString += " WHERE ";
                 queryString += String.Join(" AND ", where);
+            }
+            if (orderby != null)
+            {
+                queryString += (" ORDER BY ");
+                queryString += orderby;
             }
 
             return Query(queryString);

@@ -10,10 +10,12 @@ namespace inConcert.Controllers
 {
     public class ChatController : Controller
     {
+
         // GET: Chat
+
         public ActionResult Index()
         {
-            return View(Chat());
+            return View(GetChat());
         }
 
         public ActionResult ChatBox(Chat chat)
@@ -26,14 +28,13 @@ namespace inConcert.Controllers
             return View();
         }
 
-        public ActionResult ContactDialog()
+        public ActionResult ContactDialog(Project project)
         {
             return View();
         }
 
         public ActionResult GenerateMessage(Message msg)
         {
-
 
             if (msg.to == null)
             {
@@ -65,14 +66,17 @@ namespace inConcert.Controllers
 
             InsertToMessageTable.UsingMessageModel(msg);
 
-            return View("Index", Chat());
+            Chat chat = new Chat();
+            chat = GetChat();
+
+            return View("Index", chat);
 
         }
 
-        public Chat Chat()
+        public Chat GetChat()
         {
             Chat chat = new Chat();
-            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"));
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("messages"), Build.StringArray("*"), null, "_time");
             chat.messages = new List<Message>();
 
             foreach (List<object> row in result)
@@ -85,9 +89,15 @@ namespace inConcert.Controllers
                 msg.time = (DateTime)row[5];
                 chat.messages.Add(msg);
             }
-
+            Chat chat_two = new Chat();
             return chat;
 
+        }
+
+        public ActionResult SetRecipient()
+        {
+
+            return View("Index", GetChat());
         }
     }
 }

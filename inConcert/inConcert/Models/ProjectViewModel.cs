@@ -18,6 +18,14 @@ namespace inConcert.Models
         public List<ProjectAuth> auths { get; set; }
         public List<Calendar> calendars { get; set; }
         public Chat chat { get; set; }
+
+        public Project()
+        {
+            if (this.chat == null)
+            {
+                this.chat = new Chat();
+            }
+        }
     }
 
     public class ProjectAuth
@@ -96,16 +104,12 @@ namespace inConcert.Models
     {
         public List<Notification> Update { get; set; }
     }
-
-    public class Contacts
-    {
-
-    }
    
     public class Chat
     {
         public List<Message> messages;
         public Message message;
+        public List<object> users;
         public Chat()
         {
             if (this.message == null)
