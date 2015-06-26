@@ -1,0 +1,13 @@
+﻿@model inConcert.Models.Message
+<h2>This is my chat input partial view</h2>
+
+@using (Html.BeginForm("GenerateMessage", "Chat"))
+{
+    
+    <ul>
+        <li> body   : @Html.TextAreaFor(msg => msg.body)</li>
+    </ul>
+
+    <input type="submit" value="Send" />
+
+}

@@ -36,5 +36,33 @@ namespace inConcert.Helper
 
             );
         }
+        public static void UsingMessageModel(Message msg)
+        {
+
+            string[] message_values = 
+            {
+
+                 msg.to, 
+                 msg.from, 
+                 msg.body, 
+                 msg.project, 
+
+            };
+
+
+            string [] column_names = Build.StringArray("_to", "_from", "_body", "_project");
+
+            List<string[]> values = new List<string[]>();
+
+            values.Add(message_values);
+
+            DataAccess.DataAccess.Create(
+
+                "messages",
+                column_names,
+                values
+
+            );
+        }
     }
 }

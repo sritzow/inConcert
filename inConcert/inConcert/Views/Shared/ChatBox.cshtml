@@ -1,0 +1,16 @@
+﻿<h2>This is my chat box partial view</h2>
+<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
+
+@model inConcert.Models.Chat
+@using inConcert.Models;
+
+<br />
+
+<div id="chat-window">
+
+    @foreach (Message msg in @Model.messages)
+    {
+        <span>@msg.time [@msg.project] (@msg.from) - @msg.body</span><br />
+    }
+
+</div>
