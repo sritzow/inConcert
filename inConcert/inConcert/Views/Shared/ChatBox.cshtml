@@ -1,0 +1,18 @@
+﻿<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
+
+@model inConcert.Models.Chat
+@using inConcert.Models;
+
+
+<div id="chat-window">
+
+    @foreach (Message msg in @Model.messages)
+    {
+        <span>@msg.time [@msg.project] (@msg.from) - @msg.body</span><br />
+    }
+
+</div>
+<script>
+    var objDiv = document.getElementById("chat-window");
+    objDiv.scrollTop = objDiv.scrollHeight;
+</script>
