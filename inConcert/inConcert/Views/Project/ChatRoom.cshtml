@@ -12,14 +12,14 @@
 
     @foreach (Message msg in @Model.messages)
     {
-            <span>--[@msg.project] (@msg.from)=>(@msg.to) - @msg.body</span><br />
+            <span>@msg.time [@msg.project] (@msg.from) - @msg.body</span><br />
     }
 
 </div>
 <div id="chat-box">
     @using (Html.BeginForm("GenerateMessage", "Project"))
     {
-        @Html.TextBoxFor(msg => msg.message.body)
+        @Html.TextBoxFor(chat => chat.message.body)
         <input type="submit" value="Send"/>
     }
 </div>
