@@ -1,0 +1,11 @@
+﻿@model inConcert.Models.ProjectViewModel
+@using inConcert.Models;
+
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+   foreach (ProjectAuth auth in Model.auths)
+   {
+       <span>@Html.ActionLink("Project id: " + auth.projectId, "Project", new { id = auth.projectId })</span><br/>
+   }
+}

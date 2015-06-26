@@ -7,7 +7,7 @@ namespace inConcert.Models
 {
     public class ProjectViewModel
     {
-        
+        public List<ProjectAuth> auths { get; set; }
     }
 
     public class Project
@@ -69,7 +69,7 @@ namespace inConcert.Models
         public int calendarId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public long time { get; set; }
+        public DateTime time { get; set; }
     }
 
     public class Message
