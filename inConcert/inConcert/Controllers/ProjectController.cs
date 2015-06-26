@@ -74,6 +74,21 @@ namespace inConcert.Controllers
 
         }
 
+        public ActionResult Projects()
+        {
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("project_users"), where: Build.StringArray("user_id = '" + User.Identity.GetUserId() + "'"));
+            ProjectViewModel projects = new ProjectViewModel();
+            projects.auths = new List<ProjectAuth>();
+            foreach (List<object> auth in result)
+            {
+                ProjectAuth a = new ProjectAuth();
+                a.projectId = (int) auth[0];
+                projects.auths.Add(a);
+            }
+
+            return View("Projects", projects);
+        }
+
         public ActionResult Project(int id)
         {
             if (!Authorized(id))
@@ -93,7 +108,7 @@ namespace inConcert.Controllers
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
-                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
@@ -101,7 +116,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime) evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -121,6 +136,7 @@ namespace inConcert.Controllers
         {
             Project project = new Project();
             project.calendars = new List<Calendar>();
+            project.chat = Chat();
             project.auths = new List<ProjectAuth>();
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
@@ -131,7 +147,7 @@ namespace inConcert.Controllers
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
                 cal.events = new List<Event>();
-                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "time"), Build.StringArray("calendar_id = " + cal.id));
+                List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
                 {
                     Event e = new Event();
@@ -139,7 +155,7 @@ namespace inConcert.Controllers
                     e.calendarId = (int)evt[1];
                     e.title = (string)evt[2];
                     e.description = (string)evt[3];
-                    e.time = (long)evt[4];
+                    e.time = (DateTime)evt[4];
                     cal.events.Add(e);
                 }
                 project.calendars.Add(cal);
@@ -170,7 +186,7 @@ namespace inConcert.Controllers
                 Event e = new Event();
                 e.title = (string)row[0];
                 e.description = (string)row[1];
-                e.time = (long)row[2];
+                e.time = (DateTime)row[2];
                 calendar.events.Add(e);
                 rString += row.ToString() + "<br />";
 
