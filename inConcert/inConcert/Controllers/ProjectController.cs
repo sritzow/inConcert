@@ -110,6 +110,7 @@ namespace inConcert.Controllers
             {
                 Calendar cal = new Calendar();
                 cal.id = (int)calendar[0];
+                Session["Calendar"] = cal.id;
                 cal.events = new List<Event>();
                 List<List<object>> eventResult = DataAccess.DataAccess.Read(Build.StringArray("Events"), Build.StringArray("id", "calendar_id", "title", "description", "_time"), Build.StringArray("calendar_id = " + cal.id));
                 foreach (List<object> evt in eventResult)
@@ -169,10 +170,10 @@ namespace inConcert.Controllers
         public ActionResult CreateEvent(string title, string description, string time)
         {
             List<string[]> values = new List<string[]>();
-            values.Add(Build.StringArray(title, description, time));
+            values.Add(Build.StringArray(title, description, Session["Calendar"].ToString(), DateTime.Now.ToString(), time));
 
-            DataAccess.DataAccess.Create("Events", Build.StringArray("title, description, time"), values);
-            return Redirect("Tester");
+            DataAccess.DataAccess.Create("Events", Build.StringArray("title, description, calendar_id, occurencetime, _time"), values);
+            return Redirect("Project/" + Session["ProjectViewed"]);
         }
 
         public ActionResult CalendarTest()
