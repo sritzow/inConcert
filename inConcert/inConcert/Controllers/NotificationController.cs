@@ -48,7 +48,7 @@ namespace inConcert.Controllers
 
         }
 
-        public ActionResult NotificationView()
+        public Notifications NotificationView()
         {
 
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
@@ -65,7 +65,7 @@ namespace inConcert.Controllers
                 x.notificationFrom = (string)row[3];
                 Notify.Update.Insert(0, x);
             }
-            return PartialView("NotificationPartial", Notify);
+            return Notify;
         }
 
 
