@@ -1,11 +1,22 @@
 ﻿body {
 }
 
+#main {
+}
+
+#dialog {
+    float:left;
+}
+
+#contacts {
+    float:left;
+}
+
 #chat-window {
 
     width: 600px;
     height: 100px;
-    overflow-y: scroll;
+    overflow-y: auto;
     border: 2px solid black;
 
 }
@@ -17,3 +28,18 @@
     border: 2px solid black;
 
 }
+
+#contact-window {
+
+    width: 100px;
+    height:130px;
+    border:2px solid black;
+
+}
+
+.text-input {
+    resize: none;
+    min-width: 600px;
+    height: 28px;
+}
+

@@ -1,0 +1,30 @@
+﻿<link href="~/Content/ChatStyle.css" rel="stylesheet" type="text/css" />
+
+@model inConcert.Models.Message
+
+
+<div id="chat-box">
+@using (Html.BeginForm("GenerateMessage", "Chat"))
+{
+
+@Html.TextBoxFor(msg => msg.body, new { @class = "text-input" });
+    @Html.TextBoxFor(msg => msg.to);
+    <input type="submit" id="submit-button" value="Send" />
+
+}
+</div>
+
+<text>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            console.log("Fuckin jquery how do you work?");
+            $('#submit-button').click(function () {
+                $('#body').val("");
+            });
+        });
+
+    </script>
+
+</text>

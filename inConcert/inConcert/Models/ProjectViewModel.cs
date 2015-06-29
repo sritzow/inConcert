@@ -9,7 +9,7 @@ namespace inConcert.Models
 {
     public class ProjectViewModel
     {
-        
+        public List<ProjectAuth> auths { get; set; }
     }
 
     public class Project
@@ -19,6 +19,7 @@ namespace inConcert.Models
         public string description { get; set; }
         public List<ProjectAuth> auths { get; set; }
         public List<Calendar> calendars { get; set; }
+        public Chat chat { get; set; }
     }
 
     public class ProjectAuth
@@ -71,7 +72,8 @@ namespace inConcert.Models
         public int calendarId { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public long time { get; set; }
+        public DateTime occurencetime { get; set; }
+        public DateTime time { get; set; }
     }
 
     public class Message
@@ -98,11 +100,47 @@ namespace inConcert.Models
     {
         public List<Notification> Update { get; set; }
     }
+
+    public class Contacts
+    {
+
+    }
    
     public class Chat
     {
         public List<Message> messages;
         public Message message;
+        public Chat()
+        {
+            if (this.message == null)
+            {
+                this.message = new Message();
+            }
+        }
+    }
+
+    public class Search
+    {
+        public List<Message> messages = new List<Message>();
+        public List<Event> events = new List<Event>();
+        public List<User> users = new List<User>();
+        public List<Project> projects = new List<Project>();
+        public List<dynamic> others = new List<dynamic>();
+        public string table { get; set; }
+        public string keyword { get; set; }
+    }
+
+    public class Other
+    {
+        public string table { get; set; }
+        public List<object> result = new List<object>();
+
+    }
+
+    public class User
+    {
+        public int id { get; set; }
+        public string name { get; set; }
     }
 
 }
