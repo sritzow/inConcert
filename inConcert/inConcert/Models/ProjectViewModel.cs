@@ -20,6 +20,7 @@ namespace inConcert.Models
         public List<ProjectAuth> auths { get; set; }
         public List<Calendar> calendars { get; set; }
         public Chat chat { get; set; }
+        public Notifications notifications { get; set; }
     }
 
     public class ProjectAuth

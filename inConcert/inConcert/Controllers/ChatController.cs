@@ -65,7 +65,7 @@ namespace inConcert.Controllers
 
             InsertToMessageTable.UsingMessageModel(msg);
 
-            return View("Index", Chat());
+            return View("Mock", Chat());
 
         }
 

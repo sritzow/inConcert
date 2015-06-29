@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using inConcert.Helper;
 
 
+
 namespace inConcert.Controllers
 {
     public class ProjectController : Controller
@@ -90,12 +91,14 @@ namespace inConcert.Controllers
         }
 
 
+
         public ActionResult Project(int id)
         {
            // if (!Authorized(id))
              //   return Redirect("/");
 
             Session["ProjectViewed"] = id;
+            NotificationController _notificationController = new NotificationController();
 
             Project project = new Project();
             project.calendars = new List<Calendar>();
@@ -103,6 +106,7 @@ namespace inConcert.Controllers
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
             project.chat = Chat();
+            project.notifications = _notificationController.NotificationView();
 
             List<List<object>> calendarResult = DataAccess.DataAccess.Read(Build.StringArray("Calendars"), Build.StringArray("id"), Build.StringArray("project_id = " + Session["ProjectViewed"]));
             foreach (List<object> calendar in calendarResult)
