@@ -95,6 +95,8 @@ namespace inConcert.Models
         public string notificationMessage { get; set; }
 
         public DateTime TimeStamp { get; set; }
+
+        public string notificationFrom { get; set; }
     }
     public class Notifications : DbContext
     {

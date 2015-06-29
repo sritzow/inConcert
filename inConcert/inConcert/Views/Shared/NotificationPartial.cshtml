@@ -3,7 +3,9 @@
 
     <table class="table">
         <tr>
-
+            <th>
+                <h3>From</h3>
+            </th>
             <th>
                 <h3>Update</h3>
             </th>
@@ -18,6 +20,10 @@
         {
             <tr>
                 <td>
+                    @item.notificationFrom
+                </td>
+
+                <td>
                     @item.notificationMessage
                 </td>
 
@@ -29,16 +35,6 @@
         }
 
     </table>
-
-
-
-    @*<td>
-            @Html.DisplayFor(model => model.notificationMessage)
-        </td>
-
-        <td>
-            @Html.DisplayFor(model => model.TimeStamp)
-        </td>*@
 
 
 

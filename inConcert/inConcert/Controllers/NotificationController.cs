@@ -39,6 +39,7 @@ namespace inConcert.Controllers
                 x.notificationMessage = (string)row[1];
                 x.ID = (int)row[0];
                 x.TimeStamp = (DateTime)row[2];
+                x.notificationFrom = (string)row[3];
                 Notify.Update.Insert(0,x);
             }
             
@@ -61,6 +62,7 @@ namespace inConcert.Controllers
                 x.notificationMessage = (string)row[1];
                 x.ID = (int)row[0];
                 x.TimeStamp = (DateTime)row[2];
+                x.notificationFrom = (string)row[3];
                 Notify.Update.Insert(0, x);
             }
             return PartialView("NotificationPartial", Notify);
