@@ -26,7 +26,7 @@ namespace inConcert.Controllers
         public ActionResult NotificationView()
         {
 
-            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"), null, null, "_time", "ASC");
 
             Notifications Notify = new Notifications();
             Notify.Update = new List<Notification>();
