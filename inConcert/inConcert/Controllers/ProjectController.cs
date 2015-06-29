@@ -23,6 +23,26 @@ namespace inConcert.Controllers
         {
         }
 
+        public ActionResult NotificationView()
+        {
+
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
+
+            Notifications Notify = new Notifications();
+            Notify.Update = new List<Notification>();
+
+            foreach (List<object> row in result)
+            {
+                Notification x = new Notification();
+                x.notificationMessage = (string)row[1];
+                x.ID = (int)row[0];
+                x.TimeStamp = (DateTime)row[2];
+                x.notificationFrom = (string)row[3];
+                Notify.Update.Insert(0, x);
+            }
+            return PartialView("NotificationPartial", Notify);
+        }
+
         public ProjectController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
@@ -106,7 +126,7 @@ namespace inConcert.Controllers
             project.description = "This is a static description not being pulled from the database.";
             project.name = "This is a static name";
             project.chat = Chat();
-            project.notifications = _notificationController.NotificationView();
+            //project.notifications =  @{Html.RenderAction("NotificationView");}
 
             List<List<object>> calendarResult = DataAccess.DataAccess.Read(Build.StringArray("Calendars"), Build.StringArray("id"), Build.StringArray("project_id = " + Session["ProjectViewed"]));
             foreach (List<object> calendar in calendarResult)

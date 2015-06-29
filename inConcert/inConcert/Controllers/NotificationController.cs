@@ -27,28 +27,10 @@ namespace inConcert.Controllers
 
         public ActionResult Index()
         {
-
-            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
-
-            Notifications Notify = new Notifications();
-            Notify.Update = new List<Notification>();
-
-            foreach (List<object> row in result)
-            {
-                Notification x = new Notification();
-                x.notificationMessage = (string)row[1];
-                x.ID = (int)row[0];
-                x.TimeStamp = (DateTime)row[2];
-                x.notificationFrom = (string)row[3];
-                Notify.Update.Insert(0,x);
-            }
-            
-
-            return View("Index",Notify);
-
+            return View();
         }
 
-        public Notifications NotificationView()
+        public ActionResult NotificationView()
         {
 
             List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
@@ -65,7 +47,7 @@ namespace inConcert.Controllers
                 x.notificationFrom = (string)row[3];
                 Notify.Update.Insert(0, x);
             }
-            return Notify;
+            return PartialView("NotificationPartial",Notify);
         }
 
 
