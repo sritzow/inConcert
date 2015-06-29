@@ -1,46 +1,69 @@
-﻿@model inConcert.Models.SearchResults
+﻿@model inConcert.Models.Search
 @{
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
+<div id="search-box" class="container">
+
+    @using (Html.BeginForm("Search", "Project"))
+    {<div>
+         <div class="col-xs-1 pull-left">
+             <button type="submit" id="submit-button"><i class="glyphicon glyphicon-search"></i></button>
+         </div>
+         <div class="col-xs-7 pull-left">
+             @Html.TextBoxFor(search => search.keyword)
+             <p>Search for:</p>
+         </div>
+         <div class="col-xs-4 pull-left">
+             @Html.TextBoxFor(search => search.table)
+             <p>Field (optional):</p>
+         </div>
+
+    </div>
+    }
+</div>
 
 @foreach (var project in Model.projects)
 {
+    <hr>
     <h4>Project</h4>
     <p><b>@project.name</b></p>
     <p>@project.description</p>
-    <hr>
+
 }
 
 @foreach (var myEvent in Model.events)
 {
+    <hr>
     <h4>Event</h4>
     <p>@myEvent.occurencetime</p>
     <p><b>@myEvent.title</b></p>
     <p>@myEvent.description</p>
-    <hr>
+
 }
 
 @foreach (var message in Model.messages)
 {
+    <hr>
     <h4>Message</h4>
     <p>@message.time</p>
     <p>From: @message.from, To: @message.to</p>
     <p>@message.from</p>
-    <hr>
+
 }
 
 @foreach (var user in Model.users)
 {
+    <hr>
     <h4>User</h4>
     <p><b>@user.id</b></p>
-    <hr>
+
 }
 @foreach (var other in Model.others)
 {
+    <hr>
     <h4>@other.table</h4>
     foreach (var row in other.result)
-        {<p>@row</p>}
-    <hr>
+    {<p>@row</p>}
+
 }

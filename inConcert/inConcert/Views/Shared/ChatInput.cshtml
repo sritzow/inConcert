@@ -8,6 +8,7 @@
 {
 
 @Html.TextBoxFor(msg => msg.body, new { @class = "text-input" });
+    @Html.TextBoxFor(msg => msg.to);
     <input type="submit" id="submit-button" value="Send" />
 
 }

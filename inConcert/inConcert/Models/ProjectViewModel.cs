@@ -116,13 +116,15 @@ namespace inConcert.Models
         }
     }
 
-    public class SearchResults
+    public class Search
     {
         public List<Message> messages = new List<Message>();
         public List<Event> events = new List<Event>();
         public List<User> users = new List<User>();
         public List<Project> projects = new List<Project>();
         public List<dynamic> others = new List<dynamic>();
+        public string table { get; set; }
+        public string keyword { get; set; }
     }
 
     public class Other

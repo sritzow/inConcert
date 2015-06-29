@@ -224,13 +224,19 @@ namespace inConcert.Controllers
             return result;
         }
 
-        public ActionResult Search(string keyword, List<string> tablesToSearch = null)
+        public ActionResult Search(Search searchableStuff)
         {
-            SearchResults searchResult = new SearchResults();
+            string keyword = searchableStuff.keyword;
+            List<string> tablesToSearch = new List<string>();
+            if (!(searchableStuff.table==null))
+            {
+                tablesToSearch.Add(searchableStuff.table);
+            }
+            Search searchResult = new Search();
 
             List<List<object>> tablesWillSearch = new List<List<object>>();
 
-            if (tablesToSearch == null)
+            if (tablesToSearch.Count()==0)
             {
                 tablesWillSearch = DataAccess.DataAccess.ListTables();
             }
