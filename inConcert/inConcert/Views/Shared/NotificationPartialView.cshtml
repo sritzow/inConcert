@@ -1,14 +1,5 @@
 ﻿@model inConcert.Models.Notification
 
-@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-
-}
-<head>
-    <title></title>
-    <meta http-equiv="refresh" content="5" />
-</head>
 <td>
     @Html.DisplayFor(model => model.notificationMessage)
 </td>
@@ -16,4 +7,3 @@
 <td>
     @Html.DisplayFor(model => model.TimeStamp)
 </td>
-

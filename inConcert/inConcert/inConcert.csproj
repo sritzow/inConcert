@@ -200,6 +200,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ChatStyle.css" />
+    <Content Include="Content\Notifications.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -269,6 +270,7 @@
     <Content Include="Views\Project\Mock.cshtml" />
     <Content Include="Views\Project\ChatRoom.cshtml" />
     <Content Include="Views\Project\CreateMessage.cshtml" />
+    <Content Include="Views\Shared\NotificationPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

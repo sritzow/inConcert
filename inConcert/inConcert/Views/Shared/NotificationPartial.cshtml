@@ -1,0 +1,44 @@
+﻿@model inConcert.Models.Notifications
+
+
+    <table class="table">
+        <tr>
+
+            <th>
+                <h3>Update</h3>
+            </th>
+            <th>
+                <h3>TimeStamp</h3>
+            </th>
+
+        </tr>
+
+
+        @foreach (var item in Model.Update)
+        {
+            <tr>
+                <td>
+                    @item.notificationMessage
+                </td>
+
+                <td>
+                    @item.TimeStamp
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+
+
+    @*<td>
+            @Html.DisplayFor(model => model.notificationMessage)
+        </td>
+
+        <td>
+            @Html.DisplayFor(model => model.TimeStamp)
+        </td>*@
+
+
+

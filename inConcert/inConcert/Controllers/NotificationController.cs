@@ -12,6 +12,7 @@ using inConcert.Helper;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
+using System.Web.UI;
 
 
 
@@ -21,7 +22,7 @@ using System.Configuration;
 namespace inConcert.Controllers
 {
 
-        public class NotificationController : Controller
+    public class NotificationController : Controller
     {
 
         public ActionResult Index()
@@ -46,26 +47,41 @@ namespace inConcert.Controllers
 
         }
 
-        
+        public ActionResult NotificationView()
+        {
+
+            List<List<object>> result = DataAccess.DataAccess.Read(Build.StringArray("Notifications"));
+
+            Notifications Notify = new Notifications();
+            Notify.Update = new List<Notification>();
+
+            foreach (List<object> row in result)
+            {
+                Notification x = new Notification();
+                x.notificationMessage = (string)row[1];
+                x.ID = (int)row[0];
+                x.TimeStamp = (DateTime)row[2];
+                Notify.Update.Insert(0, x);
+            }
+            return PartialView("NotificationPartial", Notify);
+        }
+
+
 
         //void Initialization()
         //{
-            
+
         //    SqlDependency.Start(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
         //}
 
         //void SomeMethod()
         //{
-        //    // Assume connection is an open SqlConnection.
 
-        //    // Create a new SqlCommand object.
         //    using (SqlCommand command = new SqlCommand(
-        //        "SELECT ID, Notification, TimeStamp FROM dbo.Notifications"))
+        //        "SELECT ID, Notification, _time FROM dbo.Notifications"))
         //    {
 
-        //        // Create a dependency and associate it with the SqlCommand.
         //        SqlDependency dependency = new SqlDependency(command);
-        //        // Maintain the refence in a class member.
 
         //        // Subscribe to the SqlDependency event.
         //        dependency.OnChange += new
@@ -84,7 +100,7 @@ namespace inConcert.Controllers
         //   SqlNotificationEventArgs e)
         //{
         //    // Handle the event (for example, invalidate this cache entry).
-        //    Response.Redirect(Request.RawUrl);
+        //    ScriptManager.RegisterStartupScript(this, GetType(), "Refresh", "Refresh();", true); 
         //}
 
         //void Termination()

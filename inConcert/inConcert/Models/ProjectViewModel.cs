@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 
 namespace inConcert.Models
 {
@@ -85,13 +87,14 @@ namespace inConcert.Models
 
     public class Notification
     {
+        [Key]
         public int ID { get; set; }
 
         public string notificationMessage { get; set; }
 
         public DateTime TimeStamp { get; set; }
     }
-    public class Notifications
+    public class Notifications : DbContext
     {
         public List<Notification> Update { get; set; }
     }
