@@ -272,16 +272,13 @@
     <Content Include="Views\Project\Mock.cshtml" />
     <Content Include="Views\Project\ChatRoom.cshtml" />
     <Content Include="Views\Project\CreateMessage.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\NotificationPartial.cshtml" />
-=======
     <Content Include="Views\Shared\ChatBox.cshtml" />
     <Content Include="Views\Shared\ChatInput.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\Chat\ContactDialog.cshtml" />
     <Content Include="Views\Project\Search.cshtml" />
     <Content Include="Views\Project\Projects.cshtml" />
->>>>>>> 1bd9ed8730758ef02790a671812cf8fedaa235ec
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
