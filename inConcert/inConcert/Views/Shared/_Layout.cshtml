@@ -22,19 +22,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Chat", "ChatRoom", "Project")</li>
-<<<<<<< HEAD
-                    <li>@Html.ActionLink("Projects", "Project", "Project")</li>
-                    
-                   <li>
-=======
-                    <li>@Html.ActionLink("Projects", "Projects", "Project")</li>
-                    <li>
->>>>>>> 322cb2e4e267609877e0d97ac29bee29d2ff39b4
-                        <a href="@Url.Action("Search", "Project")">
-                            <i class="glyphicon glyphicon-search"></i>
-                            <span class="sr-only">Search</span>
-                          
-                        </a>
+                    <a href="@Url.Action("Search", "Project")">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span class="sr-only">Search</span>
+                    </a>
                     </li>
                 </ul>
                 @Html.Partial("_LoginPartial")

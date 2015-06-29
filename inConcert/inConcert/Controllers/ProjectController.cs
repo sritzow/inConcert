@@ -13,7 +13,6 @@ using inConcert.Helper;
 
 namespace inConcert.Controllers
 {
-    [RequireHttps]
     public class ProjectController : Controller
     {
         private ApplicationSignInManager _signInManager;
