@@ -92,8 +92,8 @@ namespace inConcert.Controllers
 
         public ActionResult Project(int id)
         {
-            if (!Authorized(id))
-                return Redirect("/");
+           // if (!Authorized(id))
+             //   return Redirect("/");
 
             Session["ProjectViewed"] = id;
 
